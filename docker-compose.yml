@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  terminal:
+    build: ./container
+    container_name: landing-terminal
+    restart: unless-stopped
+    # Network isolation - custom bridge with no external access
+    networks:
+      - isolated
+    # Resource limits
+    mem_limit: 256m
+    cpus: 0.5
+    # Read-only root filesystem (except /tmp and /home)
+    read_only: true
+    tmpfs:
+      - /tmp:size=10M
+      - /home/guestuser:size=50M,uid=1000,gid=1000
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    # Expose port only to localhost
+    ports:
+      - "127.0.0.1:7681:7681"
+
+networks:
+  isolated:
+    driver: bridge
+    # Containers can't initiate connections but ports still work
+    driver_opts:
+      com.docker.network.bridge.name: isolated0

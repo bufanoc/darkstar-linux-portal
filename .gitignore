@@ -1,0 +1,34 @@
+# Docker volumes and data
+*.log
+
+# Apache logs
+/var/log/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files (if you add any)
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Node modules (if you add any JS build tools later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist/
+build/
+
+# System files
+Thumbs.db

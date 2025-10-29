@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="stars"></div>
+        <div class="earth-container">
+            <div class="earth"></div>
+            <div class="earth-glow"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="glitch" data-text="TERMINAL PORTAL">TERMINAL PORTAL</h1>
+            <p class="subtitle">Access granted from outer space</p>
+            <div class="scroll-indicator">
+                <span>↓</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">Welcome, Explorer</h2>
+            <p class="fade-in delay-1">You've discovered a portal to a remote Ubuntu server, floating somewhere in the digital cosmos.</p>
+            <p class="fade-in delay-2">This isn't just a website—it's a gateway to interact with a real, isolated Linux environment.</p>
+        </div>
+    </section>
+
+    <!-- Terminal Section -->
+    <section class="terminal-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Mission Control</h2>
+            <p class="terminal-intro fade-in delay-1">Establish connection to the terminal below</p>
+            <div class="terminal-wrapper fade-in delay-2">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">ubuntu@terminal-portal</span>
+                </div>
+                <div class="terminal-embed">
+                    <iframe src="/terminal/" frameborder="0"></iframe>
+                </div>
+            </div>
+            <p class="terminal-note fade-in delay-3">⚡ Isolated container • Read-only filesystem • No network access • Auto-reset</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title fade-in">System Specifications</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Isolation</h3>
+                    <p>Runs in a locked-down Docker container with minimal privileges and resource limits</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Real Ubuntu 24.04</h3>
+                    <p>Authentic Ubuntu Server experience with a curated set of safe commands</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Access</h3>
+                    <p>No signup required. Jump right in and start exploring</p>
+                </div>
+                <div class="feature-card fade-in delay-4">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Web-Based</h3>
+                    <p>Powered by ttyd and WebSockets for smooth terminal emulation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Built with Docker, ttyd, and a passion for retro-futuristic design</p>
+            <p class="footer-tech">Ubuntu 24.04 LTS • Apache • Docker • ttyd</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
