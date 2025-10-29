@@ -51,7 +51,7 @@ A retro-futuristic landing page featuring an interactive, isolated Ubuntu 24.04 
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/bufanoc/darkstar-linux-portal.git
    cd terminal-landing
    ```
 
