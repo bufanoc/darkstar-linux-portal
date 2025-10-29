@@ -1,0 +1,328 @@
+/* Admin Panel Styles */
+.admin-body {
+    background: var(--bg-darker);
+    min-height: 100vh;
+}
+
+.admin-nav {
+    background: var(--bg-dark);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 1rem 0;
+}
+
+.admin-nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-nav h1 {
+    color: var(--purple-light);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.admin-nav-right {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.admin-nav-right span {
+    color: var(--text-secondary);
+}
+
+.admin-logout-btn {
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 95, 86, 0.2);
+    color: #ff5f56;
+    border: 1px solid #ff5f56;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.admin-logout-btn:hover {
+    background: rgba(255, 95, 86, 0.3);
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-tab {
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.admin-tab:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-tab.active {
+    background: var(--purple-primary);
+    border-color: var(--purple-primary);
+    color: white;
+}
+
+.admin-tab-content {
+    display: none;
+}
+
+.admin-tab-content.active {
+    display: block;
+}
+
+.admin-tab-content h2 {
+    color: var(--purple-light);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.admin-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 3rem;
+    font-size: 1.1rem;
+}
+
+.admin-table {
+    width: 100%;
+    background: var(--bg-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.admin-table thead {
+    background: rgba(168, 85, 247, 0.1);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.admin-table th {
+    color: var(--purple-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.admin-table td {
+    color: var(--text-primary);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-btn-small {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem;
+}
+
+.admin-btn-success {
+    background: rgba(39, 201, 63, 0.2);
+    color: #27c93f;
+    border: 1px solid #27c93f;
+}
+
+.admin-btn-success:hover {
+    background: rgba(39, 201, 63, 0.3);
+}
+
+.admin-btn-danger {
+    background: rgba(255, 95, 86, 0.2);
+    color: #ff5f56;
+    border: 1px solid #ff5f56;
+}
+
+.admin-btn-danger:hover {
+    background: rgba(255, 95, 86, 0.3);
+}
+
+.admin-btn-warning {
+    background: rgba(255, 189, 46, 0.2);
+    color: #ffbd2e;
+    border: 1px solid #ffbd2e;
+}
+
+.admin-btn-warning:hover {
+    background: rgba(255, 189, 46, 0.3);
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background: rgba(39, 201, 63, 0.2);
+    color: #27c93f;
+}
+
+.status-inactive {
+    background: rgba(255, 95, 86, 0.2);
+    color: #ff5f56;
+}
+
+/* Admin Modal */
+.admin-modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-modal-content {
+    background: var(--bg-dark);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.admin-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.admin-modal-close:hover {
+    color: var(--purple-primary);
+}
+
+.admin-modal-content h2 {
+    color: var(--purple-light);
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.admin-form-group label {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.admin-form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.admin-form-group input:focus {
+    outline: none;
+    border-color: var(--purple-primary);
+}
+
+.admin-form-group input[readonly] {
+    background: rgba(255, 255, 255, 0.02);
+    cursor: not-allowed;
+}
+
+.admin-btn-link {
+    background: none;
+    border: none;
+    color: var(--purple-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.admin-btn-link:hover {
+    color: var(--purple-light);
+}
+
+.admin-form-message {
+    padding: 0.8rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.admin-form-message.success {
+    display: block;
+    background: rgba(39, 201, 63, 0.2);
+    border: 1px solid #27c93f;
+    color: #27c93f;
+}
+
+.admin-form-message.error {
+    display: block;
+    background: rgba(255, 95, 86, 0.2);
+    border: 1px solid #ff5f56;
+    color: #ff5f56;
+}
+
+.admin-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--purple-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: var(--purple-light);
+}

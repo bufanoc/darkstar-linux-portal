@@ -1,6 +1,15 @@
 # Docker volumes and data
 *.log
 
+# Database and user data
+data/
+*.db
+*.db-journal
+
+# Admin creation scripts (contain passwords)
+create-admin.php
+change-admin-password.php
+
 # Apache logs
 /var/log/
 

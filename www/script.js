@@ -115,3 +115,180 @@ if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
 // Log version info
 console.log('%c Terminal Portal v1.0 ', 'background: #a855f7; color: white; padding: 5px 10px; border-radius: 3px;');
 console.log('%c Built with Docker, ttyd, Apache ', 'color: #c084fc;');
+
+/* ============================================
+   AUTHENTICATION DISABLED - UNCOMMENT TO RE-ENABLE
+   ============================================
+
+// Authentication and Modal System
+let csrfToken = '';
+
+// Fetch CSRF token on page load
+async function fetchCSRFToken() {
+    try {
+        const response = await fetch('/api/csrf-token.php');
+        const data = await response.json();
+        csrfToken = data.csrf_token;
+    } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+    }
+}
+
+// Check authentication status
+async function checkAuth() {
+    try {
+        const response = await fetch('/api/check-auth.php');
+        const data = await response.json();
+
+        if (data.authenticated) {
+            // Show user menu, hide login/signup buttons
+            document.getElementById('navButtons').style.display = 'none';
+            document.getElementById('navUser').style.display = 'flex';
+            document.getElementById('userGreeting').textContent = `Welcome, ${data.user.username}`;
+        } else {
+            // Show login/signup buttons, hide user menu
+            document.getElementById('navButtons').style.display = 'flex';
+            document.getElementById('navUser').style.display = 'none';
+        }
+    } catch (error) {
+        console.error('Auth check failed:', error);
+    }
+}
+
+// Modal handling
+const signupModal = document.getElementById('signupModal');
+const loginModal = document.getElementById('loginModal');
+const btnSignup = document.getElementById('btnSignup');
+const btnLogin = document.getElementById('btnLogin');
+const btnLogout = document.getElementById('btnLogout');
+const closeSignup = document.getElementById('closeSignup');
+const closeLogin = document.getElementById('closeLogin');
+
+// Open modals
+btnSignup?.addEventListener('click', () => {
+    signupModal.classList.add('show');
+});
+
+btnLogin?.addEventListener('click', () => {
+    loginModal.classList.add('show');
+});
+
+// Close modals
+closeSignup?.addEventListener('click', () => {
+    signupModal.classList.remove('show');
+    document.getElementById('signupForm').reset();
+    document.getElementById('signupMessage').className = 'form-message';
+});
+
+closeLogin?.addEventListener('click', () => {
+    loginModal.classList.remove('show');
+    document.getElementById('loginForm').reset();
+    document.getElementById('loginMessage').className = 'form-message';
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === signupModal) {
+        signupModal.classList.remove('show');
+    }
+    if (e.target === loginModal) {
+        loginModal.classList.remove('show');
+    }
+});
+
+// Signup form submission
+document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('signupName').value,
+        email: document.getElementById('signupEmail').value,
+        phone: document.getElementById('signupPhone').value,
+        csrf_token: csrfToken
+    };
+
+    const messageEl = document.getElementById('signupMessage');
+
+    try {
+        const response = await fetch('/api/signup.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            messageEl.textContent = data.message;
+            messageEl.className = 'form-message success';
+            document.getElementById('signupForm').reset();
+        } else {
+            messageEl.textContent = data.message;
+            messageEl.className = 'form-message error';
+        }
+    } catch (error) {
+        messageEl.textContent = 'An error occurred. Please try again.';
+        messageEl.className = 'form-message error';
+    }
+});
+
+// Login form submission
+document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        username: document.getElementById('loginUsername').value,
+        password: document.getElementById('loginPassword').value,
+        csrf_token: csrfToken
+    };
+
+    const messageEl = document.getElementById('loginMessage');
+
+    try {
+        const response = await fetch('/api/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            messageEl.textContent = 'Login successful! Redirecting...';
+            messageEl.className = 'form-message success';
+
+            // Redirect to dashboard after 1 second
+            setTimeout(() => {
+                window.location.href = '/dashboard/';
+            }, 1000);
+        } else {
+            messageEl.textContent = data.message;
+            messageEl.className = 'form-message error';
+        }
+    } catch (error) {
+        messageEl.textContent = 'An error occurred. Please try again.';
+        messageEl.className = 'form-message error';
+    }
+});
+
+// Logout
+btnLogout?.addEventListener('click', async () => {
+    try {
+        await fetch('/api/logout.php', { method: 'POST' });
+        window.location.reload();
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchCSRFToken();
+    checkAuth();
+});
+
+============================================ */

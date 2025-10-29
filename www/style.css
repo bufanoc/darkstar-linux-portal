@@ -34,6 +34,229 @@ body {
     padding: 0 2rem;
 }
 
+/* Top Navigation */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+.nav-buttons, .nav-user {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.user-greeting {
+    color: var(--purple-light);
+    font-size: 0.9rem;
+}
+
+.btn-signup, .btn-login, .btn-logout {
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-signup {
+    background: var(--purple-primary);
+    color: white;
+}
+
+.btn-signup:hover {
+    background: var(--purple-light);
+    transform: translateY(-2px);
+}
+
+.btn-login {
+    background: transparent;
+    color: var(--purple-primary);
+    border: 2px solid var(--purple-primary);
+}
+
+.btn-login:hover {
+    background: var(--purple-primary);
+    color: white;
+}
+
+.btn-logout {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--bg-dark);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--purple-primary);
+}
+
+.modal-content h2 {
+    color: var(--purple-light);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--purple-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-message {
+    padding: 0.8rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.form-message.success {
+    display: block;
+    background: rgba(39, 201, 63, 0.2);
+    border: 1px solid rgba(39, 201, 63, 0.5);
+    color: #27c93f;
+}
+
+.form-message.error {
+    display: block;
+    background: rgba(255, 95, 86, 0.2);
+    border: 1px solid rgba(255, 95, 86, 0.5);
+    color: #ff5f56;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background: var(--purple-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: var(--purple-light);
+    transform: translateY(-2px);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
 /* Hero Section */
 .hero {
     height: 100vh;

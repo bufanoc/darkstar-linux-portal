@@ -1,0 +1,20 @@
+<?php
+header('Content-Type: application/json');
+
+require_once '../../includes/config.php';
+require_once '../../includes/auth.php';
+
+// Only allow POST requests
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    exit;
+}
+
+$auth = new Auth();
+$auth->logoutUser();
+
+echo json_encode([
+    'success' => true,
+    'message' => 'Logged out successfully'
+]);

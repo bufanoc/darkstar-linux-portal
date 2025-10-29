@@ -1,0 +1,55 @@
+<?php
+header('Content-Type: application/json');
+
+require_once '../../includes/config.php';
+require_once '../../includes/db.php';
+
+// Only allow POST requests
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    exit;
+}
+
+// Get JSON input
+$input = json_decode(file_get_contents('php://input'), true);
+
+// Validate CSRF token
+if (!isset($input['csrf_token']) || !verify_csrf_token($input['csrf_token'])) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Invalid CSRF token']);
+    exit;
+}
+
+// Validate input
+$name = trim($input['name'] ?? '');
+$email = trim($input['email'] ?? '');
+$phone = trim($input['phone'] ?? '');
+
+if (empty($name) || empty($email)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Name and email are required']);
+    exit;
+}
+
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid email format']);
+    exit;
+}
+
+// Create signup request
+$db = new Database();
+if ($db->createSignupRequest($name, $email, $phone)) {
+    echo json_encode([
+        'success' => true,
+        'message' => 'Thank you for signing up! We will email you with login credentials when your account is approved.'
+    ]);
+} else {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'This email is already registered or an error occurred. Please try again.'
+    ]);
+}
