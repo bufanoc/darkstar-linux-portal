@@ -119,17 +119,29 @@ Key configuration:
 - Cloudflare SSL/TLS mode set to "Full" (end-to-end encryption)
 - **Status:** LIVE and fully operational at https://oops.skyfort.group/
 
+### 11. GitHub Repository Update ✅ COMPLETED
+- Configured git user identity for the repository
+  - Name: Carmine Bufano
+  - Email: bufanoc@users.noreply.github.com
+- Added session_continuity.md to repository
+- Created commit: "Add comprehensive deployment documentation"
+- Commit hash: 89ff434
+- Successfully pushed to GitHub: bufanoc/darkstar-linux-portal
+- Repository URL: https://github.com/bufanoc/darkstar-linux-portal
+- Documentation now available on GitHub at `/session_continuity.md`
+
 ---
 
 ## Current Server State
 
 ### Running Services
 - **Docker:** Active, container `landing-terminal` running
-- **Apache:** Active on port 80
+- **Apache:** Active on ports 80 (HTTP redirect) and 443 (HTTPS)
 - **Firewall (ufw):** Inactive
 
 ### Ports in Use
-- Port 80: Apache (HTTP)
+- Port 80: Apache (HTTP - redirects to HTTPS)
+- Port 443: Apache (HTTPS - SSL/TLS enabled)
 - Port 7681: ttyd terminal (localhost only)
 
 ### File Locations
@@ -139,25 +151,13 @@ Key configuration:
 - Apache logs: `/var/log/apache2/terminal-portal-*.log`
 
 ### Network Access
-- Direct IP (HTTP): ✅ Working - http://159.203.131.190/
-- Cloudflare domain (HTTPS): ❌ Not working - SSL/TLS mismatch
+- Direct IP (HTTP): ✅ Working - http://159.203.131.190/ (redirects to HTTPS)
+- Cloudflare domain (HTTPS): ✅ Working - https://oops.skyfort.group/
 - Terminal endpoint: ✅ Working at /terminal/
 
 ---
 
-## Next Steps (In Order)
-
-### Immediate - SSL Certificate
-1. **USER ACTION REQUIRED:** In Cloudflare, change oops.skyfort.group from proxied (orange) to DNS only (grey)
-2. Run certbot to obtain SSL certificate:
-   ```bash
-   sudo certbot --apache -d oops.skyfort.group -d www.oops.skyfort.group
-   ```
-3. Certbot will automatically configure Apache for HTTPS
-4. Enable SSL Apache module if not already enabled
-5. Restart Apache
-6. **USER ACTION:** In Cloudflare, change back to proxied (orange)
-7. **USER ACTION:** In Cloudflare SSL/TLS settings, change to "Full" mode
+## Next Steps
 
 ### Future Enhancements Discussed
 
@@ -195,9 +195,9 @@ Location: `/root/darkstar-linux-portal/docker-compose.yml`
 - Network isolation
 
 ### Apache VirtualHost
-Location: `/etc/apache2/sites-available/terminal-portal.conf`
-- Current: HTTP only (port 80)
-- After SSL: Will have HTTPS (port 443) config added by certbot
+Locations:
+- `/etc/apache2/sites-available/terminal-portal.conf` - HTTP (port 80) with redirect to HTTPS
+- `/etc/apache2/sites-available/terminal-portal-le-ssl.conf` - HTTPS (port 443) with SSL certificates
 
 ### Container Dockerfile
 Location: `/root/darkstar-linux-portal/container/Dockerfile`
@@ -231,10 +231,9 @@ Location: `/root/darkstar-linux-portal/container/Dockerfile`
 **Solution:** Move to /var/www/ and set www-data ownership
 
 ### Cloudflare "Web Server Down"
-**Cause:** SSL/TLS mode mismatch
-**Options:**
-1. Quick: Set Cloudflare to "Flexible" SSL
-2. Proper: Install SSL certificate (in progress)
+**Cause:** SSL/TLS mode mismatch (server has no SSL but Cloudflare expects HTTPS)
+**Solution Applied:** Installed Let's Encrypt SSL certificate and set Cloudflare to "Full" SSL mode
+**Note:** Temporarily disable Cloudflare proxy (orange to grey) when obtaining Let's Encrypt certificates
 
 ### Docker Container Not Starting
 **Check:**
@@ -322,6 +321,28 @@ sudo ss -tlnp | grep -E ':(80|443|7681)'
 sudo ufw status
 ```
 
+### Git Management
+```bash
+# Check repository status
+git status
+
+# View recent commits
+git log --oneline -5
+
+# Pull latest changes
+git pull origin main
+
+# Add and commit changes
+git add .
+git commit -m "Your commit message"
+
+# Push to GitHub
+git push origin main
+
+# View remote repository
+git remote -v
+```
+
 ---
 
 ## GitHub Repository Info
@@ -355,12 +376,25 @@ sudo ufw status
 
 ## Session Context
 - Started: October 31, 2025 ~00:17 UTC
-- Current time: ~01:30 UTC
-- Duration: ~1 hour 15 minutes
-- Token usage: ~104k/200k
+- Last updated: ~01:50 UTC
+- Duration: ~1 hour 35 minutes
+- Token usage: ~35k/200k (new session after context limit)
 
 ## User Preferences Noted
 - Wants everything visually stunning
 - Planning to document advanced network topologies
 - Interested in embedded Linux desktop (Webtop)
 - Prefers proper/secure solutions over quick fixes
+
+---
+
+## Resuming Work
+
+**To continue this project from a new computer or session:**
+
+1. SSH into the server: `ssh root@159.203.131.190`
+2. Start Claude Code and say: *"Read /root/session_continuity.md to understand the darkstar-linux-portal setup"*
+3. This documentation contains everything needed to continue seamlessly
+
+**Alternative:** View documentation on GitHub at:
+https://github.com/bufanoc/darkstar-linux-portal/blob/main/session_continuity.md
