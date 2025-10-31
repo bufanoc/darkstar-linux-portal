@@ -41,3 +41,24 @@ build/
 
 # System files
 Thumbs.db
+
+# Webtop cache and temporary files - keep repo clean
+webtop-config/.cache/
+webtop-config/.config/chromium/*/Cache/
+webtop-config/.config/chromium/*/GPUCache/
+webtop-config/.config/chromium/*/Service\ Worker/
+webtop-config/.config/chromium/*/IndexedDB/
+webtop-config/.config/chromium/BrowserMetrics*
+webtop-config/.local/share/
+webtop-config/.bash_history
+webtop-config/.XDG/
+webtop-config/.dbus/
+webtop-config/.config/pulse/
+webtop-config/.config/xfce4/desktop/icons.screen*.rc
+webtop-config/.config/xfce4/xfconf/
+webtop-config/.sudo_as_admin_successful
+webtop-config/.xsettingsd
+
+# Keep essential webtop configs only
+!webtop-config/.config/
+!webtop-config/.bashrc
