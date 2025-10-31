@@ -29,9 +29,44 @@ services:
     ports:
       - "127.0.0.1:7681:7681"
 
+  webtop:
+    image: lscr.io/linuxserver/webtop:alpine-i3
+    container_name: darkstar-webtop
+    restart: unless-stopped
+    # Start on isolated network (no internet) - Apache can proxy via this
+    networks:
+      - isolated
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - SUBFOLDER=/
+      - TITLE=Dark Star Desktop
+      - CUSTOM_USER=darkstar
+      - PASSWORD=temppassword
+    volumes:
+      - /root/darkstar-linux-portal/webtop-config:/config
+    # Ports for Apache proxy
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3001:3001"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    # Resource limits - Webtop needs more resources than terminal
+    mem_limit: 2g
+    cpus: 2.0
+
 networks:
   isolated:
     driver: bridge
-    # Containers can't initiate connections but ports still work
+    # Internal network - NO internet access (no default gateway)
+    internal: true
     driver_opts:
       com.docker.network.bridge.name: isolated0
+
+  # Network with internet access - webtop will be connected to this via password-protected API
+  internet:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: internet0

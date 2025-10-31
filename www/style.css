@@ -562,6 +562,74 @@ section {
     font-size: 0.95rem;
 }
 
+/* Launch Section */
+.launch-section {
+    background: linear-gradient(180deg, var(--bg-darker), var(--bg-dark));
+    padding: 8rem 0;
+    text-align: center;
+}
+
+.launch-intro {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.launch-button-container {
+    margin: 3rem 0;
+}
+
+.btn-launch {
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+    border: 2px solid var(--purple-light);
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-launch::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-launch:hover::before {
+    left: 100%;
+}
+
+.btn-launch:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.6);
+    border-color: white;
+}
+
+.btn-launch:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.launch-note {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
 /* Footer */
 .footer {
     background: var(--bg-darker);
@@ -594,5 +662,9 @@ section {
 
     .section-title {
         font-size: 2rem;
+    }
+
+    .container {
+        padding: 0 1rem;
     }
 }

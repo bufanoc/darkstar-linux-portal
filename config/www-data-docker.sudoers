@@ -1,0 +1,5 @@
+# Allow www-data to execute docker network commands without password
+# For Dark Star Portal network control API
+www-data ALL=(ALL) NOPASSWD: /usr/bin/docker network connect darkstar-linux-portal_internet darkstar-webtop
+www-data ALL=(ALL) NOPASSWD: /usr/bin/docker network disconnect darkstar-linux-portal_internet darkstar-webtop
+www-data ALL=(ALL) NOPASSWD: /usr/bin/docker network inspect darkstar-linux-portal_internet *

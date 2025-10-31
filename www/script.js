@@ -292,3 +292,61 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 ============================================ */
+
+// Network Control for Webtop
+async function controlNetwork(action) {
+    const password = document.getElementById('network-password').value;
+    const statusEl = document.getElementById('network-status');
+
+    if (!password) {
+        statusEl.textContent = '⚠️ Please enter a password';
+        statusEl.style.background = 'rgba(255, 165, 0, 0.2)';
+        statusEl.style.border = '1px solid rgba(255, 165, 0, 0.5)';
+        statusEl.style.color = '#ffa500';
+        statusEl.style.display = 'block';
+        return;
+    }
+
+    // Show loading state
+    statusEl.textContent = `${action === 'enable' ? '🌐' : '🚫'} Processing...`;
+    statusEl.style.background = 'rgba(168, 85, 247, 0.2)';
+    statusEl.style.border = '1px solid rgba(168, 85, 247, 0.5)';
+    statusEl.style.color = '#c084fc';
+    statusEl.style.display = 'block';
+
+    try {
+        const response = await fetch('/api/network-control.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                password: password,
+                action: action
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            statusEl.textContent = `✅ ${data.message}`;
+            statusEl.style.background = 'rgba(39, 201, 63, 0.2)';
+            statusEl.style.border = '1px solid rgba(39, 201, 63, 0.5)';
+            statusEl.style.color = '#27c93f';
+
+            // Clear password field on success
+            document.getElementById('network-password').value = '';
+        } else {
+            statusEl.textContent = `❌ ${data.error}`;
+            statusEl.style.background = 'rgba(255, 95, 86, 0.2)';
+            statusEl.style.border = '1px solid rgba(255, 95, 86, 0.5)';
+            statusEl.style.color = '#ff5f56';
+        }
+    } catch (error) {
+        statusEl.textContent = '❌ Network request failed';
+        statusEl.style.background = 'rgba(255, 95, 86, 0.2)';
+        statusEl.style.border = '1px solid rgba(255, 95, 86, 0.5)';
+        statusEl.style.color = '#ff5f56';
+        console.error('Network control error:', error);
+    }
+}

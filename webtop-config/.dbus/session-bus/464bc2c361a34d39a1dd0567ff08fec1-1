@@ -1,0 +1,8 @@
+# This file allows processes on the machine with id 464bc2c361a34d39a1dd0567ff08fec1 using 
+# display :1 to find the D-Bus session bus with the below address.
+# If the DBUS_SESSION_BUS_ADDRESS environment variable is set, it will
+# be used rather than this file.
+# See "man dbus-launch" for more details.
+DBUS_SESSION_BUS_ADDRESS='unix:path=/tmp/dbus-OOAIfjlgwc,guid=52c6b5d6742e7f0abce3241a6904d4d8'
+DBUS_SESSION_BUS_PID=364
+DBUS_SESSION_BUS_WINDOWID=2097153

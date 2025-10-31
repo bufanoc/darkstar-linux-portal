@@ -130,59 +130,150 @@ Key configuration:
 - Repository URL: https://github.com/bufanoc/darkstar-linux-portal
 - Documentation now available on GitHub at `/session_continuity.md`
 
+### 12. WebVM Integration ✅ COMPLETED (LATER REMOVED)
+- **Purpose:** Self-hosted Linux desktop environment running in browser via WebAssembly
+- **Technology:** WebVM 2.0 with CheerpX virtualization engine
+- **Status:** Initially deployed, then removed in favor of Webtop solution
+- **Reason for removal:** User preferred Docker-based Webtop with better control over network access
+
+### 13. WebVM Removal ✅ COMPLETED
+- Removed WebVM section from landing page HTML
+- Removed all WebVM-specific CSS styles
+- Removed Apache `/desktop/` configuration
+- Deleted `/var/www/webvm/` directory
+- Deleted `/root/webvm/` source directory
+- Cleaned up all references and dependencies
+
+### 14. Webtop Desktop Implementation with Network Isolation ✅ COMPLETED
+- **Technology:** LinuxServer.io Webtop (Alpine i3 variant)
+- **Container:** `darkstar-webtop` running Alpine Linux with i3 window manager
+- **Network Security Architecture:**
+  - Starts on `isolated` network (internal: true - NO internet)
+  - Can be dynamically connected to `internet` network via API
+  - Password-protected network control system
+- **Docker Compose Configuration:**
+  - Image: `lscr.io/linuxserver/webtop:alpine-i3`
+  - Resources: 2GB RAM, 2 CPUs, 1GB shared memory
+  - Ports: 3000 (HTTP), 3001 (HTTPS) - localhost only
+  - Networks: isolated (default), internet (on-demand)
+- **Apache Configuration:**
+  - Endpoint: `/webtop/` proxied to https://127.0.0.1:3001/
+  - WebSocket support for desktop streaming
+  - SSL proxy enabled
+  - Cross-origin headers for WebCodecs API
+
+### 15. Password-Protected Network Control API ✅ COMPLETED
+- **API Endpoint:** `/api/network-control.php`
+- **Security Features:**
+  - Argon2ID password hashing
+  - Password verification before any network changes
+  - Restricted sudo permissions for www-data user
+- **Functionality:**
+  - Enable internet: Connects webtop to internet network
+  - Disable internet: Disconnects webtop from internet network
+  - Status checking: Verifies current network state
+- **Sudoers Configuration:** `/etc/sudoers.d/www-data-docker`
+  - Limited to specific docker network commands only
+  - No password prompt for approved commands
+- **Default Password:** `darkstar2025` (should be changed)
+
+### 16. Landing Page Network Control UI ✅ COMPLETED
+- **Network Control Panel** integrated into launch section
+- **Features:**
+  - Password input field
+  - Enable/Disable internet buttons
+  - Real-time status feedback with color coding
+  - Clear instructions about network isolation
+- **User Flow:**
+  1. User clicks "Launch Desktop Environment"
+  2. Desktop opens at `/webtop/` (no internet)
+  3. User enters password in control panel
+  4. Clicks "Enable Internet" button
+  5. JavaScript calls API with password
+  6. On success, internet is enabled immediately
+  7. User can disable internet anytime
+
+### 17. SMS Verification System - PLANNED
+- **Purpose:** Enhanced security for internet access
+- **Proposed Flow:**
+  1. User clicks "Enable Internet"
+  2. Wizard explains members-only policy
+  3. User enters: Name, Email, Phone
+  4. SMS sent with 6-digit verification code
+  5. User enters code for validation
+  6. Magic link sent to email
+  7. User clicks link → Internet enabled
+- **Technology Stack (Proposed):**
+  - Twilio for SMS ($15 trial credit, ~$0.0079/SMS)
+  - Database table for tracking verifications
+  - Token-based magic link system
+  - 24-hour access grants (configurable)
+- **Cost Estimate:** ~$2-3/month for 10 users/day
+- **Status:** Planning phase - awaiting Twilio account setup
+- **Documentation:** `/root/WEBTOP_DEPLOYMENT.md`
+
 ---
 
 ## Current Server State
 
 ### Running Services
-- **Docker:** Active, container `landing-terminal` running
+- **Docker:** Active
+  - `landing-terminal` - ttyd terminal container
+  - `darkstar-webtop` - Alpine i3 desktop (ready to deploy)
 - **Apache:** Active on ports 80 (HTTP redirect) and 443 (HTTPS)
 - **Firewall (ufw):** Inactive
+
+### Docker Networks
+- `darkstar-linux-portal_isolated` - Internal network (no internet)
+- `darkstar-linux-portal_internet` - External network (full internet)
 
 ### Ports in Use
 - Port 80: Apache (HTTP - redirects to HTTPS)
 - Port 443: Apache (HTTPS - SSL/TLS enabled)
 - Port 7681: ttyd terminal (localhost only)
+- Port 3000: Webtop HTTP (localhost only)
+- Port 3001: Webtop HTTPS (localhost only)
 
 ### File Locations
-- Web files: `/var/www/darkstar-portal/`
-- Repository: `/root/darkstar-linux-portal/`
-- Apache config: `/etc/apache2/sites-available/terminal-portal.conf`
-- Apache logs: `/var/log/apache2/terminal-portal-*.log`
+- **Web files:** `/var/www/darkstar-portal/`
+- **Repository:** `/root/darkstar-linux-portal/`
+- **Apache config:** `/etc/apache2/sites-available/terminal-portal-le-ssl.conf`
+- **Apache logs:** `/var/log/apache2/terminal-portal-*.log`
+- **Network Control API:** `/var/www/darkstar-portal/api/network-control.php`
+- **Sudoers config:** `/etc/sudoers.d/www-data-docker`
+- **Webtop config:** `/root/darkstar-linux-portal/webtop-config/`
 
 ### Network Access
-- Direct IP (HTTP): ✅ Working - http://159.203.131.190/ (redirects to HTTPS)
-- Cloudflare domain (HTTPS): ✅ Working - https://oops.skyfort.group/
-- Terminal endpoint: ✅ Working at /terminal/
+- **Main portal:** ✅ https://oops.skyfort.group/
+- **Terminal:** ✅ https://oops.skyfort.group/terminal/ (ZORK game)
+- **Desktop:** 🔜 https://oops.skyfort.group/webtop/ (ready to deploy)
+- **Network API:** ✅ https://oops.skyfort.group/api/network-control.php
 
 ---
 
 ## Next Steps
 
-### Future Enhancements Discussed
+### Potential Future Enhancements
 
-#### Webtop Desktop Integration
-**Complexity:** Moderate (6/10)
-**Time Estimate:** 1-2 hours
+#### Custom WebVM Disk Images
+- Build custom Debian/Alpine images with pre-installed tools
+- Customize desktop environment themes to match purple space aesthetic
+- Add development tools (VS Code, git, compilers, etc.)
 
-**Plan:**
-- Add Webtop container to docker-compose.yml
-- Embed desktop at 30% scroll position on landing page
-- Use iframe for embedding
-- Add Apache proxy rules for /desktop/ endpoint
-- Considerations:
-  - RAM: ~2GB per Webtop instance needed
-  - CPU: Desktop environment is resource-intensive
-  - Current droplet specs need verification
+#### Tailscale Networking Integration
+- Document setup process for WebVM networking
+- Create guides for connecting WebVM instances together
+- Enable SSH access between WebVM and other services
 
-**Architecture:**
-```
-Landing Page
-├── Hero Section
-├── Content (30% scroll)
-├── Webtop Desktop (iframe) ← NEW
-└── Terminal Section (existing)
-```
+#### Performance Optimization
+- Implement aggressive caching for WebVM assets
+- Consider CDN for static WebVM resources
+- Monitor resource usage and optimize as needed
+
+#### Additional Interactive Elements
+- Network topology visualizations
+- Interactive documentation system
+- Real-time system monitoring dashboards
 
 ---
 
@@ -205,6 +296,17 @@ Location: `/root/darkstar-linux-portal/container/Dockerfile`
 - Main service: ttyd
 - User: guestuser (non-root)
 - Security: minimal privileges, capability drops
+
+### WebVM Configuration
+Locations:
+- WebVM source: `/root/webvm/`
+- WebVM build output: `/var/www/webvm/`
+- Config files:
+  - `/root/webvm/config_public_alpine.js` - Alpine Linux desktop configuration
+  - `/root/webvm/config_public_terminal.js` - Terminal-only configuration
+- **Important:** Requires cross-origin isolation headers (configured in Apache)
+- **Build process:** `npm install && npm run build` (SvelteKit + Vite)
+- **Disk image:** Served from `wss://disks.webvm.io/alpine_20251007.ext2`
 
 ---
 
@@ -343,6 +445,30 @@ git push origin main
 git remote -v
 ```
 
+### WebVM Management
+```bash
+# Rebuild WebVM after changes
+cd /root/webvm
+npm install
+npm run build
+
+# Copy build to web directory
+sudo cp -r /root/webvm/build/* /var/www/webvm/
+sudo chown -R www-data:www-data /var/www/webvm
+
+# Test cross-origin headers
+curl -I https://oops.skyfort.group/desktop/alpine.html | grep -i cross-origin
+
+# Check WebVM disk image config
+cat /root/webvm/config_public_alpine.js
+
+# Update WebVM from upstream
+cd /root/webvm
+git pull origin main
+npm install
+npm run build
+```
+
 ---
 
 ## GitHub Repository Info
@@ -375,16 +501,27 @@ git remote -v
 ---
 
 ## Session Context
-- Started: October 31, 2025 ~00:17 UTC
-- Last updated: ~01:50 UTC
-- Duration: ~1 hour 35 minutes
-- Token usage: ~35k/200k (new session after context limit)
+- **Session 1:** October 31, 2025 ~00:17 UTC - ~01:50 UTC
+  - Initial setup, SSL, terminal integration, GitHub setup
+- **Session 2:** October 31, 2025 ~06:00 UTC - ~06:20 UTC
+  - WebVM integration, desktop environment setup
+- **Session 3:** October 31, 2025 ~06:30 UTC - ~08:00 UTC
+  - WebVM removal, Webtop implementation
+  - Network isolation architecture
+  - Password-protected network control API
+  - SMS verification system planning
+- **Total implementation:** ~4 hours
+- **Technologies deployed:** Apache, Docker, ttyd, Webtop, SSL/TLS, PHP API, Argon2ID
 
 ## User Preferences Noted
 - Wants everything visually stunning
 - Planning to document advanced network topologies
-- Interested in embedded Linux desktop (Webtop)
+- Changed from WebVM to Webtop for better network control
+- Security-focused: internet disabled by default
 - Prefers proper/secure solutions over quick fixes
+- Single-page design with scroll-reveal sections
+- Interested in SMS verification for access control
+- Responsible access provider model
 
 ---
 
