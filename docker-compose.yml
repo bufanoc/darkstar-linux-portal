@@ -30,7 +30,7 @@ services:
       - "127.0.0.1:7681:7681"
 
   webtop:
-    image: lscr.io/linuxserver/webtop:ubuntu-gnome
+    image: lscr.io/linuxserver/webtop:fedora-kde
     container_name: darkstar-webtop
     restart: unless-stopped
     # Start on isolated network (no internet by default)
