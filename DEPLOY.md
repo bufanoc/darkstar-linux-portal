@@ -4,6 +4,25 @@ This guide is designed for AI assistants (Claude Code, Gemini CLI, etc.) to auto
 
 ---
 
+## ⚙️ Minimum Server Requirements
+
+**IMPORTANT**: This application requires adequate resources to run smoothly.
+
+**Minimum Specifications**:
+- **RAM**: 4GB (recommended 4GB+)
+- **CPU**: 2 cores
+- **Disk**: 20GB free space
+- **OS**: Ubuntu 24.04 LTS
+
+**Why these specs**:
+- Webtop (Ubuntu KDE Desktop): Requires 2GB RAM + 1.5 CPUs
+- Terminal container: Requires 256MB RAM + 0.5 CPUs
+- System overhead: ~1-1.5GB RAM
+
+**DO NOT** attempt to deploy on servers with less than 3GB RAM - the desktop environment will crash due to memory exhaustion.
+
+---
+
 ## 🤖 AI Assistant Instructions
 
 **When a user asks you to deploy this application, follow these exact steps:**
@@ -21,7 +40,21 @@ This guide is designed for AI assistants (Claude Code, Gemini CLI, etc.) to auto
    # Should output: root
    ```
 
-3. Check if git is installed:
+3. **Check server resources (CRITICAL)**:
+   ```bash
+   # Check RAM (need 4GB minimum)
+   free -h
+
+   # Check CPU cores (need 2 minimum)
+   nproc
+
+   # Check disk space (need 20GB minimum)
+   df -h /
+   ```
+
+   **STOP IF**: RAM < 3GB or CPUs < 2. Inform the user to resize their server first.
+
+4. Check if git is installed:
    ```bash
    git --version || apt install -y git
    ```
