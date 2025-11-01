@@ -77,21 +77,27 @@ The script will automatically:
 - Deploy Docker containers
 - Install monitoring
 
-#### 4. SSL Certificate Setup (Manual Step)
+#### 4. SSL Certificate Setup
 
 **INFORM THE USER:**
-"The deployment is complete! However, SSL certificate setup requires manual steps:"
+"The deployment is complete! For HTTPS (SSL), run the automated SSL setup script:"
 
-1. Point your domain's DNS to this server's IP address
-2. If using Cloudflare:
-   - Set DNS to "DNS only" mode (grey cloud icon)
-3. Run this command to get SSL certificate:
-   ```bash
-   certbot --apache -d THEIR_DOMAIN
-   ```
-4. If using Cloudflare:
-   - Re-enable proxy mode (orange cloud icon)
-   - Set SSL/TLS mode to "Full" in Cloudflare dashboard
+```bash
+./scripts/setup-ssl.sh
+```
+
+This script will:
+1. Check if certbot is installed (install if needed)
+2. Guide you through Cloudflare setup (disable proxy temporarily)
+3. Obtain Let's Encrypt certificate automatically
+4. Deploy SSL Apache configuration
+5. Remind you to re-enable Cloudflare proxy
+
+**Cloudflare-Ready:**
+- The application is fully compatible with Cloudflare
+- Webtop requires HTTPS (uses WebSockets over SSL)
+- Let's Encrypt + Cloudflare "Full" SSL mode works perfectly
+- The SSL setup script handles everything automatically
 
 #### 5. Verify Deployment
 
