@@ -1,0 +1,75 @@
+# Fail2Ban custom configuration for Dark Star Linux Portal
+
+[DEFAULT]
+# Ban settings
+bantime = 1h
+findtime = 10m
+maxretry = 5
+
+# Increase ban time for repeat offenders
+bantime.increment = true
+bantime.maxtime = 1w
+bantime.factor = 2
+
+# Email settings (optional - configure if needed)
+#destemail = your@email.com
+#sender = fail2ban@yourdomain.com
+#action = %(action_mwl)s
+
+# Ignore Cloudflare IPs and localhost
+ignoreip = 127.0.0.1/8 ::1
+
+# SSH Jail - Monitor SSH authentication attempts
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+bantime = 2h
+findtime = 10m
+
+# Apache auth - Monitor Apache authentication failures
+[apache-auth]
+enabled = true
+port = http,https
+filter = apache-auth
+logpath = /var/log/apache2/terminal-portal-error.log
+maxretry = 5
+bantime = 1h
+
+# Apache badbots - Block known bad bots and scanners
+[apache-badbots]
+enabled = true
+port = http,https
+filter = apache-badbots
+logpath = /var/log/apache2/terminal-portal-access.log
+maxretry = 2
+bantime = 24h
+
+# Apache overflows - Block buffer overflow attempts
+[apache-overflows]
+enabled = true
+port = http,https
+filter = apache-overflows
+logpath = /var/log/apache2/terminal-portal-error.log
+maxretry = 2
+bantime = 24h
+
+# Apache noscript - Block script kiddies
+[apache-noscript]
+enabled = true
+port = http,https
+filter = apache-noscript
+logpath = /var/log/apache2/terminal-portal-error.log
+maxretry = 3
+bantime = 12h
+
+# Apache shellshock - Block shellshock attacks
+[apache-shellshock]
+enabled = true
+port = http,https
+filter = apache-shellshock
+logpath = /var/log/apache2/terminal-portal-error.log
+maxretry = 1
+bantime = 1w

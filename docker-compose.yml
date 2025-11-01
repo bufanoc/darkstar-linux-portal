@@ -30,10 +30,11 @@ services:
       - "127.0.0.1:7681:7681"
 
   webtop:
-    image: lscr.io/linuxserver/webtop:alpine-i3
+    image: lscr.io/linuxserver/webtop:ubuntu-kde
     container_name: darkstar-webtop
     restart: unless-stopped
-    # Start on isolated network (no internet) - Apache can proxy via this
+    # Start on isolated network (no internet by default)
+    # Use Network Control API to enable internet access
     networks:
       - isolated
     environment:
@@ -43,19 +44,20 @@ services:
       - SUBFOLDER=/
       - TITLE=Dark Star Desktop
       - CUSTOM_USER=darkstar
-      - PASSWORD=Xm9909ona@+?Xm5909ona@+?
+      # No password by default - accessible to anyone on the portal
+      # Security through network isolation and optional password-protected internet
     volumes:
-      - /root/darkstar-linux-portal/webtop-config:/config
-    # Ports for Apache proxy
+      - ./webtop-config:/config
+    # Ports for Apache proxy (localhost only)
     ports:
       - "127.0.0.1:3000:3000"
       - "127.0.0.1:3001:3001"
     shm_size: "1gb"
     security_opt:
       - seccomp:unconfined
-    # Resource limits - Webtop needs more resources than terminal
-    mem_limit: 1g
-    cpus: 0.8
+    # Resource limits
+    mem_limit: 2g
+    cpus: 1.5
 
 networks:
   isolated:

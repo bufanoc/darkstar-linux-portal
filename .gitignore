@@ -62,3 +62,9 @@ webtop-config/.xsettingsd
 # Keep essential webtop configs only
 !webtop-config/.config/
 !webtop-config/.bashrc
+
+# Deployment configuration (contains passwords and domain)
+config/deployment.env
+
+# Session continuity files (server-specific)
+session_continuity.md
