@@ -10,7 +10,7 @@ services:
       - isolated
     # Resource limits
     mem_limit: 256m
-    cpus: 0.5
+    cpus: 0.3
     # Read-only root filesystem (except /tmp and /home)
     read_only: true
     tmpfs:
@@ -56,8 +56,8 @@ services:
     security_opt:
       - seccomp:unconfined
     # Resource limits
-    mem_limit: 2g
-    cpus: 1.5
+    mem_limit: 1g
+    cpus: 0.7
 
 networks:
   isolated:
