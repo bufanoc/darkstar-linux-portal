@@ -30,7 +30,7 @@ services:
       - "127.0.0.1:7681:7681"
 
   webtop:
-    image: lscr.io/linuxserver/webtop:ubuntu-kde
+    image: lscr.io/linuxserver/webtop:ubuntu-gnome
     container_name: darkstar-webtop
     restart: unless-stopped
     # Start on isolated network (no internet by default)
@@ -52,12 +52,12 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
       - "127.0.0.1:3001:3001"
-    shm_size: "1gb"
+    shm_size: "2gb"
     security_opt:
       - seccomp:unconfined
-    # Resource limits
-    mem_limit: 2g
-    cpus: 1.5
+    # Resource limits - maximized for super-sized droplet
+    mem_limit: 3g
+    cpus: 2.0
 
 networks:
   isolated:
