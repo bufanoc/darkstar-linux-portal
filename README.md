@@ -26,9 +26,13 @@ Dark Star Portal delivers a complete Linux desktop environment through your web 
 - **Network Isolation** - Desktop starts with zero internet access
 - **Password-Protected Network Control** - Argon2ID-hashed authentication
 - **SSL/TLS Encryption** - Let's Encrypt certificates with Cloudflare integration
-- **Resource Limits** - CPU and memory constraints prevent abuse
-- **Read-Only Filesystems** - Where possible, for enhanced security
+- **UFW Firewall** - Enabled by default, only essential ports open
+- **Fail2Ban Protection** - Automatic brute force attack prevention
+- **Container Security** - no-new-privileges, capability restrictions, resource limits
+- **Read-Only Filesystems** - Terminal container uses read-only root
 - **Isolated Docker Networks** - Separate networks for isolated and internet-connected modes
+- **Security Monitoring** - Automated health checks and alerts
+- **Comprehensive Security Audit** - Built-in testing script validates configuration
 
 ### Deployment
 - **Automated Setup** - One-command deployment script
@@ -116,9 +120,17 @@ Dark Star Portal delivers a complete Linux desktop environment through your web 
 
 ## Quick Start
 
+### AI-Assisted Deployment 🤖
+
+**Want AI to deploy this for you?** Point your AI assistant (Claude, GPT, etc.) to this repository and ask it to deploy Dark Star Portal. Our comprehensive [AI_DEPLOY.md](AI_DEPLOY.md) guide optimizes the deployment process for AI agents.
+
+```
+"Please deploy darkstar-linux-portal from https://github.com/bufanoc/darkstar-linux-portal"
+```
+
 ### Automated Deployment
 
-The fastest way to get started:
+The fastest way to get started manually:
 
 ```bash
 # Clone the repository
@@ -219,23 +231,40 @@ curl -X POST https://your-domain.com/api/network-control.php \
 
 ## Security
 
-### Default Security Posture
+### Production-Ready Security (v1.0)
 
+Dark Star Portal v1.0 ships with enterprise-grade security enabled by default:
+
+#### Core Security Features
 - **Network Isolated**: Desktop has zero internet access by default
-- **SSL/TLS Required**: All traffic encrypted via Let's Encrypt
-- **Password Protected**: Network control requires authentication
+- **SSL/TLS Required**: All traffic encrypted via Let's Encrypt + Cloudflare
+- **Password Protected**: Argon2ID-hashed authentication for network control
+- **UFW Firewall**: System-level firewall (ports 22, 80, 443 only)
+- **Fail2Ban**: Automatic IP banning for SSH and Apache brute force attempts
+- **System Monitoring**: Automated health checks every 6 hours
 - **Resource Limited**: Containers cannot consume excessive resources
-- **Capability Dropped**: Minimal Linux capabilities granted
+- **Capability Dropped**: Minimal Linux capabilities (NET_RAW dropped)
+- **no-new-privileges**: Prevents privilege escalation in containers
 
-### Optional Security Hardening
+#### Security Audit Tool
 
-Additional security features available but disabled by default:
+Test your deployment for container escape vulnerabilities:
 
-- **UFW Firewall**: System-level firewall rules
-- **Fail2Ban**: Automatic IP banning for brute force attempts
-- **System Monitoring**: Automated health checks and alerts
+```bash
+sudo ./scripts/security-audit.sh
+```
 
-See [SECURITY_HARDENING_SUMMARY.md](SECURITY_HARDENING_SUMMARY.md) for details.
+The audit script performs 13 comprehensive tests:
+- Docker socket exposure check
+- Privileged container detection
+- Namespace isolation verification
+- Capability analysis
+- File system mount security
+- Container breakout attempt simulation
+- Port binding security
+- Resource limit verification
+
+A secure deployment should achieve **"EXCELLENT"** or **"GOOD"** rating.
 
 ### Security Considerations
 
@@ -250,11 +279,14 @@ See [SECURITY_HARDENING_SUMMARY.md](SECURITY_HARDENING_SUMMARY.md) for details.
 
 Comprehensive documentation available:
 
-- **[DEPLOY.md](DEPLOY.md)** - Detailed deployment guide with AI-friendly instructions
+- **[AI_DEPLOY.md](AI_DEPLOY.md)** - AI-assisted deployment guide (optimized for Claude, GPT, etc.)
+- **[DEPLOY.md](DEPLOY.md)** - Detailed manual deployment guide
 - **[AFTER_RESIZE.md](AFTER_RESIZE.md)** - Post-resize checklist and procedures
+- **[RELEASE_NOTES.md](RELEASE_NOTES.md)** - Version history and changelog
 - **[session_continuity.md](session_continuity.md)** - Current system status and session state
 - **[docs/SECURITY_HARDENING.md](docs/SECURITY_HARDENING.md)** - Advanced security configuration
 - **[docs/WEBTOP_DEPLOYMENT.md](docs/WEBTOP_DEPLOYMENT.md)** - Desktop environment details
+- **[scripts/security-audit.sh](scripts/security-audit.sh)** - Container security audit tool
 
 ---
 
@@ -375,7 +407,8 @@ darkstar-linux-portal/
 ├── scripts/                         # Automation scripts
 │   ├── deploy.sh                    # Automated deployment
 │   ├── setup-ssl.sh                 # SSL certificate setup
-│   └── darkstar-monitor.sh          # System monitoring
+│   ├── darkstar-monitor.sh          # System monitoring
+│   └── security-audit.sh            # Container security audit
 ├── www/                             # Web files
 │   ├── index.html                   # Landing page
 │   ├── style.css                    # Styling

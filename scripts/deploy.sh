@@ -110,27 +110,28 @@ else
 fi
 
 ################################################################################
-# Step 3: Install Apache
+# Step 3: Install Apache and PHP
 ################################################################################
 if ! command -v apache2 &> /dev/null; then
-    log_info "Step 3: Installing Apache..."
-    apt install -y apache2
+    log_info "Step 3: Installing Apache and PHP..."
+    apt install -y apache2 php php-cli libapache2-mod-php
 
     # Enable required modules
-    a2enmod proxy proxy_http proxy_wstunnel rewrite ssl headers
+    a2enmod proxy proxy_http proxy_wstunnel rewrite ssl headers php8.3
 
     systemctl enable apache2
-    log_success "Apache installed and modules enabled"
+    log_success "Apache and PHP installed and modules enabled"
 else
     log_success "Apache already installed"
-    log_info "Enabling required Apache modules..."
-    a2enmod proxy proxy_http proxy_wstunnel rewrite ssl headers
+    log_info "Ensuring PHP is installed and Apache modules are enabled..."
+    apt install -y php php-cli libapache2-mod-php
+    a2enmod proxy proxy_http proxy_wstunnel rewrite ssl headers php8.3
 fi
 
 ################################################################################
-# Step 4: Setup UFW Firewall (Optional)
+# Step 4: Setup UFW Firewall
 ################################################################################
-if [ "$UFW_ENABLED" = "true" ]; then
+if [ "${UFW_ENABLED:-true}" = "true" ]; then
     log_info "Step 4: Configuring UFW firewall..."
     apt install -y ufw
 
@@ -147,9 +148,9 @@ else
 fi
 
 ################################################################################
-# Step 5: Install Fail2Ban (Optional)
+# Step 5: Install Fail2Ban
 ################################################################################
-if [ "$FAIL2BAN_ENABLED" = "true" ]; then
+if [ "${FAIL2BAN_ENABLED:-true}" = "true" ]; then
     if ! command -v fail2ban-client &> /dev/null; then
         log_info "Step 5: Installing Fail2Ban..."
         apt install -y fail2ban
@@ -311,9 +312,9 @@ else
 fi
 
 ################################################################################
-# Step 12: Install Monitoring Script (Optional)
+# Step 12: Install Monitoring Script
 ################################################################################
-if [ "$MONITORING_ENABLED" = "true" ]; then
+if [ "${MONITORING_ENABLED:-true}" = "true" ]; then
     log_info "Step 12: Installing monitoring script..."
 
     if [ -f "$REPO_ROOT/scripts/darkstar-monitor.sh" ]; then
