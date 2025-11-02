@@ -459,7 +459,9 @@ Named after the Folsom release of OpenStack, honoring the open-source infrastruc
 
 ## License
 
-MIT License - See LICENSE file for details
+BSD 3-Clause License - See LICENSE file for details.
+
+Copyright (c) 2025 Carmine Bufano (bufanoc)
 
 ---
 
