@@ -54,10 +54,7 @@ services:
       - "127.0.0.1:3001:3001"
     shm_size: "2gb"
     security_opt:
-      - no-new-privileges:true
-      - apparmor:unconfined  # Required for desktop environment X11/Wayland
-    cap_drop:
-      - NET_RAW  # Prevent raw socket access (ping still works via setcap)
+      - seccomp:unconfined  # Required for desktop environment to work properly
     # Resource limits - maximized for super-sized droplet
     mem_limit: 3g
     cpus: 2.0
