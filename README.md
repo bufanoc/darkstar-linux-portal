@@ -457,6 +457,26 @@ Named after the Folsom release of OpenStack, honoring the open-source infrastruc
 
 ---
 
+## Attribution & Credits
+
+**darkstar-linux-portal** was created and is maintained by **Carmine Bufano**.
+
+- **Website**: [carminebufano.com](https://carminebufano.com)
+- **GitHub**: [@bufanoc](https://github.com/bufanoc)
+- **Repository**: [bufanoc/darkstar-linux-portal](https://github.com/bufanoc/darkstar-linux-portal)
+
+If you use, modify, or distribute this software, please ensure proper attribution
+to the original creator is maintained in accordance with the BSD-3-Clause License.
+
+### Why Attribution Matters
+
+This project represents significant effort and expertise in systems architecture,
+containerization, and web security. Attribution ensures that the original creator
+receives appropriate recognition while allowing the open source community to
+benefit from and build upon this work.
+
+---
+
 ## License
 
 BSD 3-Clause License - See LICENSE file for details.
