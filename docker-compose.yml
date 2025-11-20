@@ -30,7 +30,7 @@ services:
       - "127.0.0.1:7681:7681"
 
   webtop:
-    image: lscr.io/linuxserver/webtop:fedora-kde
+    image: lscr.io/linuxserver/webtop:ubuntu-mate
     container_name: darkstar-webtop
     restart: unless-stopped
     # Start on isolated network (no internet by default)
@@ -56,8 +56,8 @@ services:
     security_opt:
       - seccomp:unconfined  # Required for desktop environment to work properly
     # Resource limits - maximized for super-sized droplet
-    mem_limit: 3g
-    cpus: 2.0
+    mem_limit: 4g
+    cpus: 3.5
 
 networks:
   isolated:

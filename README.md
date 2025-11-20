@@ -2,7 +2,7 @@
 
 **Version 1.0 "Folsom"** - First Major Release
 
-A secure, browser-accessible Linux desktop environment with password-protected network control. Experience a full-featured Fedora KDE Plasma desktop and Ubuntu terminal directly in your browser, with enterprise-grade security and network isolation.
+A secure, browser-accessible Linux desktop environment with password-protected network control. Experience a full-featured Ubuntu MATE desktop and Ubuntu terminal directly in your browser, with enterprise-grade security and network isolation.
 
 ---
 
@@ -17,10 +17,11 @@ Dark Star Portal delivers a complete Linux desktop environment through your web 
 ## Features
 
 ### Desktop Environment
-- **Fedora KDE Plasma** - Full-featured, modern desktop experience
-- **Ubuntu Terminal** - Integrated ttyd-powered terminal
+- **Ubuntu MATE** - Stable, reliable desktop experience
+- **Ubuntu Terminal** - Integrated ttyd-powered terminal with ZORK game
 - **Browser-Based Access** - No client software required
 - **WebSocket Streaming** - Smooth, responsive desktop interaction
+- **Auto-Clean Every 30 Minutes** - Desktop automatically restarts for security
 
 ### Security
 - **Network Isolation** - Desktop starts with zero internet access
@@ -198,8 +199,8 @@ webtop:
 ### Accessing the Portal
 
 1. Navigate to your domain: `https://your-domain.com`
-2. Click "Launch Desktop Environment" for the full KDE desktop
-3. Click "Access Terminal" for command-line access
+2. Click "Launch Desktop Environment" for the full MATE desktop
+3. Click "Access Terminal" for command-line access (ZORK game)
 
 ### Enabling Internet Access
 
@@ -435,8 +436,8 @@ darkstar-linux-portal/
 - Let's Encrypt SSL/TLS
 
 ### Desktop Environment
-- Fedora KDE Plasma (via LinuxServer.io webtop)
-- Ubuntu 24.04 terminal (via ttyd)
+- Ubuntu MATE (via LinuxServer.io webtop)
+- Ubuntu 24.04 terminal (via ttyd with ZORK game)
 
 ### Security
 - Argon2ID password hashing
