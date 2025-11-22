@@ -1,6 +1,21 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 error_reporting(0);
+
+// ============================================
+// AUTHENTICATION CHECK
+// ============================================
+// Check if user is logged in and is admin
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    echo json_encode(['success' => false, 'error' => 'Authentication required. Please login.']);
+    exit;
+}
+
+if ($_SESSION['role'] !== 'admin') {
+    echo json_encode(['success' => false, 'error' => 'Access denied. Admin privileges required.']);
+    exit;
+}
 
 // ============================================
 // RATE LIMITING CONFIGURATION
@@ -135,26 +150,13 @@ if (!$rateLimitCheck['allowed']) {
     exit;
 }
 
-// Password hash for: Xm2909onaXm2909ona
-$password_hash = '$argon2id$v=19$m=65536,t=4,p=1$ZFhoM2tmOUtPM2xXUXNUcw$/+yozMnppDQV7y2ZUnNau3EYbS7wYpI6lZwxXDZhno8';
-
 // Get JSON input
 $input = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($input['password']) || !isset($input['action'])) {
-    echo json_encode(['success' => false, 'error' => 'Missing password or action']);
+if (!isset($input['action'])) {
+    echo json_encode(['success' => false, 'error' => 'Missing action']);
     exit;
 }
-
-// Verify password
-if (!password_verify($input['password'], $password_hash)) {
-    recordFailedAttempt($clientIP, $rateLimitCheck['data']);
-    echo json_encode(['success' => false, 'error' => 'Invalid password']);
-    exit;
-}
-
-// Password correct - reset rate limit for this IP
-resetRateLimit($clientIP, $rateLimitCheck['data']);
 
 // Execute network control command
 $container = 'darkstar-webtop';

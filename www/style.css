@@ -695,6 +695,59 @@ section {
     background: rgba(39, 201, 63, 0.85) !important;
 }
 
+/* Auth Navigation */
+.auth-nav {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.auth-btn {
+    padding: 0.7rem 1.3rem;
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+.auth-btn:hover {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: var(--purple-primary);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+    transform: translateY(-2px);
+}
+
+.auth-btn-primary {
+    background: var(--purple-primary);
+    border-color: var(--purple-primary);
+}
+
+.auth-btn-primary:hover {
+    background: var(--purple-light);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5);
+}
+
+.auth-user-info {
+    padding: 0.7rem 1.3rem;
+    background: rgba(26, 26, 46, 0.8);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 8px;
+    color: var(--purple-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+}
+
 /* Interactive Feature Cards */
 .feature-card {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);

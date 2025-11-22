@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Star Linux Portal</title>
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
+    <!-- Auth Navigation -->
+    <nav class="auth-nav" id="authNav">
+        <!-- Logged out state -->
+        <div id="authLoggedOut" style="display: none;">
+            <a href="/login.html" class="auth-btn">Login</a>
+            <a href="/signup.html" class="auth-btn auth-btn-primary">Sign Up</a>
+        </div>
+        <!-- Logged in state -->
+        <div id="authLoggedIn" style="display: none;">
+            <span class="auth-user-info">👤 <span id="authUsername"></span></span>
+            <a href="/admin/dashboard.html" class="auth-btn" id="adminDashboardLink" style="display: none;">Admin Dashboard</a>
+            <button class="auth-btn" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="stars"></div>
@@ -102,11 +117,9 @@
             </p>
 
             <!-- Network Control Panel -->
-            <div id="network-control" class="fade-in delay-4" style="max-width: 500px; margin: 3rem auto; padding: 2rem; background: rgba(26, 26, 46, 0.8); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            <div id="network-control" class="fade-in delay-4" style="max-width: 500px; margin: 3rem auto; padding: 2rem; background: rgba(26, 26, 46, 0.8); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.3); display: none;">
                 <h3 style="color: var(--purple-light); margin-bottom: 1rem; text-align: center;">🌐 Internet Control</h3>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center;">Enter password to enable internet access in the desktop:</p>
-
-                <input type="password" id="network-password" placeholder="Enter password" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 6px; color: white; font-size: 1rem;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center;">Enable or disable internet access in the desktop:</p>
 
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                     <button onclick="controlNetwork('enable')" style="flex: 1; padding: 0.8rem; background: var(--purple-primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
@@ -121,11 +134,9 @@
             </div>
 
             <!-- Cron Control Panel (Subtle) -->
-            <div id="cron-control" class="fade-in delay-5" style="max-width: 500px; margin: 2rem auto; padding: 1.5rem; background: rgba(20, 20, 35, 0.6); border-radius: 8px; border: 1px solid rgba(100, 100, 120, 0.2);">
+            <div id="cron-control" class="fade-in delay-5" style="max-width: 500px; margin: 2rem auto; padding: 1.5rem; background: rgba(20, 20, 35, 0.6); border-radius: 8px; border: 1px solid rgba(100, 100, 120, 0.2); display: none;">
                 <h3 style="color: rgba(168, 85, 247, 0.7); margin-bottom: 0.8rem; text-align: center; font-size: 0.95rem;">⏱️ Desktop Auto-Restart Control</h3>
                 <p style="color: rgba(200, 200, 220, 0.6); font-size: 0.85rem; margin-bottom: 1.2rem; text-align: center;">Pause/resume the 30-minute auto-restart cycle</p>
-
-                <input type="password" id="cron-password" placeholder="Enter password" style="width: 100%; padding: 0.7rem; margin-bottom: 0.8rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(100, 100, 120, 0.3); border-radius: 6px; color: white; font-size: 0.9rem;">
 
                 <div style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem;">
                     <button onclick="controlCron('pause')" style="flex: 1; padding: 0.7rem; background: rgba(255, 165, 0, 0.7); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.9rem;">
@@ -149,6 +160,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=4"></script>
 </body>
 </html>

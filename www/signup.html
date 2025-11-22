@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Dark Star Portal</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-form-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .auth-form {
+            background: rgba(26, 26, 46, 0.9);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(168, 85, 247, 0.1);
+            backdrop-filter: blur(10px);
+            animation: formSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes formSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .auth-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--purple-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--purple-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-submit:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            animation: alertSlideIn 0.3s ease;
+        }
+
+        @keyframes alertSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: rgba(39, 201, 63, 0.2);
+            border: 1px solid rgba(39, 201, 63, 0.5);
+            color: #27c93f;
+        }
+
+        .alert-error {
+            background: rgba(255, 95, 86, 0.2);
+            border: 1px solid rgba(255, 95, 86, 0.5);
+            color: #ff5f56;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--purple-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: var(--purple-light);
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: var(--purple-primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-home:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--purple-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <a href="/" class="back-home">← Back to Home</a>
+
+    <div class="auth-container">
+        <div class="auth-form-wrapper">
+            <form class="auth-form" id="signupForm">
+                <h1 class="auth-title">Join Dark Star</h1>
+                <p class="auth-subtitle">Create your account and explore the cosmos</p>
+
+                <div id="alert"></div>
+
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter username" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Enter email" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter password (min 8 characters)" required autocomplete="new-password">
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>Create Account</span>
+                </button>
+
+                <div class="auth-footer">
+                    Already have an account? <a href="/login.html">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add twinkling stars
+        function addTwinkle() {
+            const stars = document.querySelector('.stars');
+            if (!stars) return;
+
+            const twinkle = document.createElement('div');
+            twinkle.style.position = 'absolute';
+            twinkle.style.width = '2px';
+            twinkle.style.height = '2px';
+            twinkle.style.background = '#fff';
+            twinkle.style.borderRadius = '50%';
+            twinkle.style.left = `${Math.random() * 100}%`;
+            twinkle.style.top = `${Math.random() * 100}%`;
+            twinkle.style.animation = 'twinkle 2s ease-in-out';
+            twinkle.style.pointerEvents = 'none';
+
+            stars.appendChild(twinkle);
+            setTimeout(() => twinkle.remove(), 2000);
+        }
+
+        setInterval(addTwinkle, 500);
+
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const alertDiv = document.getElementById('alert');
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Creating Account...</span>';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'signup',
+                        username,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.textContent = data.message;
+                    alertDiv.style.display = 'block';
+
+                    // Clear form
+                    document.getElementById('signupForm').reset();
+
+                    // Redirect to login after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = '/login.html';
+                    }, 3000);
+                } else {
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.textContent = data.error;
+                    alertDiv.style.display = 'block';
+
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                alertDiv.className = 'alert alert-error';
+                alertDiv.textContent = 'Network error. Please try again.';
+                alertDiv.style.display = 'block';
+
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

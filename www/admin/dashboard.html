@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Dark Star Portal</title>
+    <link rel="stylesheet" href="../style.css?v=3">
+    <style>
+        body {
+            padding: 2rem;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--purple-light);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--purple-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--purple-primary);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--purple-light);
+        }
+
+        .users-section {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--purple-light);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .tab:hover {
+            background: rgba(168, 85, 247, 0.1);
+            color: white;
+        }
+
+        .tab.active {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-primary);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th {
+            text-align: left;
+            padding: 1rem;
+            color: var(--purple-light);
+            font-weight: 700;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .users-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+
+        .users-table tr:hover {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid rgba(255, 165, 0, 0.4);
+        }
+
+        .badge-active {
+            background: rgba(39, 201, 63, 0.2);
+            color: #27c93f;
+            border: 1px solid rgba(39, 201, 63, 0.4);
+        }
+
+        .badge-suspended {
+            background: rgba(255, 95, 86, 0.2);
+            color: #ff5f56;
+            border: 1px solid rgba(255, 95, 86, 0.4);
+        }
+
+        .badge-admin {
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--purple-light);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-approve {
+            background: rgba(39, 201, 63, 0.8);
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: rgba(39, 201, 63, 1);
+            box-shadow: 0 4px 12px rgba(39, 201, 63, 0.4);
+        }
+
+        .btn-reject {
+            background: rgba(255, 95, 86, 0.8);
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: rgba(255, 95, 86, 1);
+            box-shadow: 0 4px 12px rgba(255, 95, 86, 0.4);
+        }
+
+        .btn-suspend {
+            background: rgba(255, 165, 0, 0.8);
+            color: white;
+        }
+
+        .btn-suspend:hover {
+            background: rgba(255, 165, 0, 1);
+            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+        }
+
+        .btn-activate {
+            background: rgba(39, 201, 63, 0.8);
+            color: white;
+        }
+
+        .btn-activate:hover {
+            background: rgba(39, 201, 63, 1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--purple-primary);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .users-table {
+                font-size: 0.85rem;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 0.7rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Admin Dashboard</h1>
+            <div class="header-actions">
+                <a href="/" class="btn btn-secondary">← Back to Portal</a>
+                <button id="logoutBtn" class="btn btn-primary">Logout</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value" id="stat-total">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pending Approval</div>
+                <div class="stat-value" id="stat-pending">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Users</div>
+                <div class="stat-value" id="stat-active">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Suspended</div>
+                <div class="stat-value" id="stat-suspended">-</div>
+            </div>
+        </div>
+
+        <div class="users-section">
+            <div class="section-header">
+                <h2 class="section-title">User Management</h2>
+                <div class="filter-tabs">
+                    <div class="tab active" data-filter="all">All</div>
+                    <div class="tab" data-filter="pending">Pending</div>
+                    <div class="tab" data-filter="active">Active</div>
+                    <div class="tab" data-filter="suspended">Suspended</div>
+                </div>
+            </div>
+
+            <div id="usersTable"></div>
+        </div>
+    </div>
+
+    <script src="../script.js?v=3"></script>
+    <script>
+        let currentFilter = 'all';
+
+        // Check if user is admin
+        async function checkAuth() {
+            const response = await fetch('/api/auth.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'check' })
+            });
+
+            const data = await response.json();
+
+            if (!data.logged_in || data.user.role !== 'admin') {
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Load stats
+        async function loadStats() {
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'stats' })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('stat-total').textContent = data.stats.total || 0;
+                document.getElementById('stat-pending').textContent = data.stats.pending || 0;
+                document.getElementById('stat-active').textContent = data.stats.active || 0;
+                document.getElementById('stat-suspended').textContent = data.stats.suspended || 0;
+            }
+        }
+
+        // Load users
+        async function loadUsers(filter = 'all') {
+            const tableDiv = document.getElementById('usersTable');
+            tableDiv.innerHTML = '<div class="loading">Loading users...</div>';
+
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'list-users', status: filter })
+            });
+
+            const data = await response.json();
+
+            if (data.success && data.users.length > 0) {
+                let tableHTML = `
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                data.users.forEach(user => {
+                    const statusBadge = `<span class="badge badge-${user.status}">${user.status}</span>`;
+                    const roleBadge = user.role === 'admin' ? `<span class="badge badge-admin">admin</span>` : 'user';
+                    const createdDate = new Date(user.created_at).toLocaleDateString();
+
+                    let actions = '';
+                    if (user.status === 'pending') {
+                        actions = `
+                            <button class="btn-small btn-approve" onclick="approveUser(${user.id})">Approve</button>
+                            <button class="btn-small btn-reject" onclick="rejectUser(${user.id})">Reject</button>
+                        `;
+                    } else if (user.status === 'active' && user.role !== 'admin') {
+                        actions = `<button class="btn-small btn-suspend" onclick="suspendUser(${user.id})">Suspend</button>`;
+                    } else if (user.status === 'suspended') {
+                        actions = `<button class="btn-small btn-activate" onclick="activateUser(${user.id})">Activate</button>`;
+                    }
+
+                    tableHTML += `
+                        <tr>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>${roleBadge}</td>
+                            <td>${statusBadge}</td>
+                            <td>${createdDate}</td>
+                            <td><div class="action-buttons">${actions}</div></td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += '</tbody></table>';
+                tableDiv.innerHTML = tableHTML;
+            } else {
+                tableDiv.innerHTML = '<div class="empty-state">No users found</div>';
+            }
+        }
+
+        // User actions
+        async function approveUser(userId) {
+            if (!confirm('Approve this user?')) return;
+
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'approve-user', user_id: userId })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                loadUsers(currentFilter);
+                loadStats();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function rejectUser(userId) {
+            if (!confirm('Reject and delete this user? This cannot be undone.')) return;
+
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'reject-user', user_id: userId })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                loadUsers(currentFilter);
+                loadStats();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function suspendUser(userId) {
+            if (!confirm('Suspend this user?')) return;
+
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'suspend-user', user_id: userId })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                loadUsers(currentFilter);
+                loadStats();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        async function activateUser(userId) {
+            if (!confirm('Activate this user?')) return;
+
+            const response = await fetch('/api/admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'activate-user', user_id: userId })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                loadUsers(currentFilter);
+                loadStats();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const response = await fetch('/api/auth.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'logout' })
+            });
+
+            window.location.href = '/login.html';
+        });
+
+        // Filter tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                loadUsers(currentFilter);
+            });
+        });
+
+        // Initialize
+        checkAuth();
+        loadStats();
+        loadUsers();
+
+        // Refresh every 30 seconds
+        setInterval(() => {
+            loadStats();
+            loadUsers(currentFilter);
+        }, 30000);
+    </script>
+</body>
+</html>
