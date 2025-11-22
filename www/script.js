@@ -17,6 +17,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-in');
     fadeElements.forEach(el => observer.observe(el));
 
+    // Interactive feature cards smooth scroll
+    const interactiveCards = document.querySelectorAll('.feature-card.interactive');
+    interactiveCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const targetId = card.getAttribute('data-scroll-to');
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Add click animation
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+
+                // Smooth scroll to target
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+
+        // Add cursor pointer hint
+        card.style.cursor = 'pointer';
+    });
+
     // Smooth scroll for scroll indicator
     const scrollIndicator = document.querySelector('.scroll-indicator');
     if (scrollIndicator) {

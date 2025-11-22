@@ -694,3 +694,70 @@ section {
 #cron-control button:last-of-type:hover {
     background: rgba(39, 201, 63, 0.85) !important;
 }
+
+/* Interactive Feature Cards */
+.feature-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card.interactive {
+    cursor: pointer;
+}
+
+.feature-card.interactive::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.feature-card.interactive:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.feature-card.interactive:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow:
+        0 20px 40px rgba(168, 85, 247, 0.3),
+        0 0 30px rgba(168, 85, 247, 0.2),
+        inset 0 0 20px rgba(168, 85, 247, 0.1);
+    border-color: rgba(168, 85, 247, 0.6);
+}
+
+.feature-card.interactive:active {
+    transform: translateY(-8px) scale(0.98);
+    transition: all 0.15s ease;
+}
+
+.feature-card.interactive .feature-icon {
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-card.interactive:hover .feature-icon {
+    transform: scale(1.2) rotate(5deg);
+    filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.8));
+}
+
+.feature-card.interactive h3,
+.feature-card.interactive p {
+    position: relative;
+    z-index: 1;
+}
+
+.feature-card.interactive:hover h3 {
+    color: var(--purple-light);
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
